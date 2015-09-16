@@ -5,7 +5,7 @@ var Stack = function() {
   instance.storage = {};
   instance.quantity = 0;
 
-  extend(instance, stackMethods);
+  _.extend(instance, stackMethods);
 
   return instance;
 };
@@ -35,9 +35,3 @@ var stackMethods = {
     return temp;
   }
 };
-
-function extend(to, from) {
-  for (var key in from) {
-    to[key] = from[key];
-  }
-}

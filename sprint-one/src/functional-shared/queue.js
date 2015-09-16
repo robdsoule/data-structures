@@ -5,7 +5,7 @@ var Queue = function(){
   queueObj.storage = {};
   queueObj.quantity = 0;
   queueObj.firstIndex = 0;
-  extend(queueObj, queueMethods);
+  _.extend(queueObj, queueMethods);
 
   return queueObj;
 };
@@ -33,13 +33,3 @@ var queueMethods = {
     return temp;
   }
 };
-
-var extend = function(to, from) {
-  for (var key in from) {
-    to[key] = from[key];
-  }
-};
-
-
-
-
