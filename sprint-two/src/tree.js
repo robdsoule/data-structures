@@ -23,12 +23,10 @@ treeMethods.contains = function(target){
   var found = false;
 
   var find = function(tree) {
-    // debugger;
     if (tree.value === target) {
       found = true;
       return;
     }
-    // debugger;
     for (var i = 0; i < tree.children.length; i++) {
       find(tree.children[i]);
     }
