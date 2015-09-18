@@ -29,6 +29,18 @@ describe('hashTable', function() {
     expect(hashTable.retrieve('Steven')).to.equal(null);
   });
 
+  xit('should not allow more than the limit', function () {
+    hashTable.insert('1', 'a');
+    hashTable.insert('2', 'b');
+    hashTable.insert('3', 'c');
+    hashTable.insert('4', 'd');
+    hashTable.insert('5', 'e');
+    hashTable.insert('6', 'f');
+    hashTable.insert('7', 'g');
+    hashTable.insert('8', 'h');
+    hashTable.insert('9', 'i');
+  });
+
   it('should handle hash function collisions', function(){
     var v1 = "val1";
     var v2 = "val2";
