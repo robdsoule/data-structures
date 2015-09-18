@@ -29,18 +29,6 @@ describe('hashTable', function() {
     expect(hashTable.retrieve('Steven')).to.equal(null);
   });
 
-  xit('should not allow more than the limit', function () {
-    hashTable.insert('1', 'a');
-    hashTable.insert('2', 'b');
-    hashTable.insert('3', 'c');
-    hashTable.insert('4', 'd');
-    hashTable.insert('5', 'e');
-    hashTable.insert('6', 'f');
-    hashTable.insert('7', 'g');
-    hashTable.insert('8', 'h');
-    hashTable.insert('9', 'i');
-  });
-
   it('should handle hash function collisions', function(){
     var v1 = "val1";
     var v2 = "val2";
@@ -54,7 +42,7 @@ describe('hashTable', function() {
   });
 
   // (Extra credit! Remove the extra "x" when you want the following tests to run)
-  xit('should double in size when needed', function() {
+  it('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0], lastName = person[1];
       hashTable.insert(firstName,lastName);
@@ -62,7 +50,7 @@ describe('hashTable', function() {
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit('should halve in size when needed', function() {
+  it('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0], lastName = person[1];
       hashTable.insert(firstName,lastName);
