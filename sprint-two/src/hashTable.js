@@ -36,7 +36,7 @@ HashTable.prototype.insert = function(k, v){
   var hash = getIndexBelowMaxForKey(k, this._limit);
   var length;
   var obj = {};
-  var storedHash = [];
+  var bucket = [];
   var containsKey = false;
 
   // Create a new bucket if it doesn't exist
@@ -45,16 +45,16 @@ HashTable.prototype.insert = function(k, v){
   }
 
   length = this.keys[hash].length;
-  storedHash = this._storage.get(hash); // <-- Bucket array
+  bucket = this._storage.get(hash); // <-- Bucket array
   obj[k] = v;
 
   // First item in bucket
-  if (!storedHash) {
-    storedHash = [];
+  if (!bucket) {
+    bucket = [];
   }
 
   // Search if key already exists in bucket
-  storedHash.forEach(function(val) {
+  bucket.forEach(function(val) {
     if (val !== null && val.hasOwnProperty(k)) {
       containsKey = true;
     }
@@ -64,8 +64,8 @@ HashTable.prototype.insert = function(k, v){
     return;
   }
 
-  storedHash.push(obj);
-  this._storage.set(hash, storedHash);
+  bucket.push(obj);
+  this._storage.set(hash, bucket);
 
   // Check lengths to extend
   this.counter += 1;
@@ -82,15 +82,15 @@ HashTable.prototype.insert = function(k, v){
 
 HashTable.prototype.retrieve = function(k){
   var hash = getIndexBelowMaxForKey(k, this._limit);
-  var storedHash = this._storage.get(hash);
+  var bucket = this._storage.get(hash);
 
   var value = null;
 
-  if (!storedHash) {
+  if (!bucket) {
     return value;
   }
 
-  storedHash.forEach(function(val) {
+  bucket.forEach(function(val) {
     if (val !== null && val.hasOwnProperty(k)) {
       value = val[k];
     }
@@ -101,14 +101,14 @@ HashTable.prototype.retrieve = function(k){
 
 HashTable.prototype.remove = function(k){
   var hash = getIndexBelowMaxForKey(k, this._limit);
-  var storedHash = this._storage.get(hash);
+  var bucket = this._storage.get(hash);
   var temp;
 
-  if (!storedHash) {
+  if (!bucket) {
     return null;
   }
 
-  storedHash.forEach(function(val, ind, arr) {
+  bucket.forEach(function(val, ind, arr) {
     if (val !== null && val.hasOwnProperty(k)) {
       temp = val[k];
       arr[ind] = null;
@@ -128,4 +128,17 @@ HashTable.prototype.remove = function(k){
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ */
+
+/*
+      resize()   : O(n), basically. Has to run through each stored value
+      insert()   : O(1), basically. O(1) except for searching through bucket array, which is only at max 4 values
+      retrieve() : O(1), basically. O(1) except for searching through bucket array, which is only at max 4 values
+      remove()   : O(1), basically. O(1) except for searching through bucket array, which is only at max 4 values
+
+    LimitedArray methods:
+
+      get()  : O(1), accessing array through index
+      set()  : O(1), accessing array through index
+      each() : O(n), iterates over each value in array once
  */
