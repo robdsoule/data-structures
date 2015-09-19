@@ -1,10 +1,11 @@
 var Tree = function(value){
   var newTree = {};
   newTree.value = value;
+  newTree.parent = null;
 
   extend(newTree, treeMethods);
   // your code here
-  newTree.children = [];  // Contains all of our subtrees
+  newTree.children = {} ;  // Contains all of our subtrees
 
   return newTree;
 };
@@ -13,11 +14,27 @@ var Tree = function(value){
 var treeMethods = {};
 
 treeMethods.addChild = function(value){
-  var child = Tree(value)
-  this.children.push(child);
+  var child = Tree(value);
+  child.setParent(this);
+  this.children[value] = child;
 
   return child;
 };
+
+treeMethods.removeFromParent = function() {
+  delete this.parent.children[this.value]
+  this.parent = null;
+
+  return this;
+};
+
+treeMethods.setParent = function(parent) {
+  this.parent = parent;
+};
+
+treeMethods.setValue = function(value) {
+  this.value = value;
+}
 
 treeMethods.contains = function(target){
   var found = false;
@@ -27,8 +44,8 @@ treeMethods.contains = function(target){
       found = true;
       return;
     }
-    for (var i = 0; i < tree.children.length; i++) {
-      find(tree.children[i]);
+    for (var key in tree.children) {
+      find(tree.children[key]);
     }
   }
   find(this);
