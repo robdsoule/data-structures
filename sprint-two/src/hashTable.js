@@ -132,9 +132,9 @@ HashTable.prototype.remove = function(k){
 
 /*
       resize()   : O(n), basically. Has to run through each stored value
-      insert()   : O(1), basically. O(1) except for searching through bucket array, which is only at max 4 values
+      insert()   : O(1) amortized, basically. O(1) except for searching through bucket array, which is only at max 4 values. Might take longer if needing to resize
       retrieve() : O(1), basically. O(1) except for searching through bucket array, which is only at max 4 values
-      remove()   : O(1), basically. O(1) except for searching through bucket array, which is only at max 4 values
+      remove()   : O(1) amortized, basically. O(1) except for searching through bucket array, which is only at max 4 values. Might take longer if needing to resize
 
     LimitedArray methods:
 
