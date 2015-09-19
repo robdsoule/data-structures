@@ -2,6 +2,7 @@ var BinarySearchTree = function(value, depth){
   this.left = null;
   this.right = null;
   this.depth = depth || 0;
+  this.parent = null;
 
   this.value = value;
 
@@ -9,21 +10,25 @@ var BinarySearchTree = function(value, depth){
 
 BinarySearchTree.prototype.insert = function(value) {
   var newTree = new BinarySearchTree(value, this.depth + 1);
+  var side = '';
 
   if (this.value > value) {
     if (this.left) {
-      return this.left.insert(value);
+      newTree = this.left.insert(value);
     } else {
+      side = 'left';
       this.left = newTree;
     }
   } else {
     if (this.right) {
-      return this.right.insert(value);
+      newTree = this.right.insert(value);
     } else {
+      side = 'right'
       this.right = newTree;
     }
   }
   newTree.parent = this;
+  autobalance(newTree, side);
   return newTree;
 };
 
@@ -76,13 +81,23 @@ BinarySearchTree.prototype.breadthFirstLog = function(callback, depth) {
 };
 
 // Autobalances the tree upon
-BinarySearchTree.prototype.autobalance = function() {
+function autobalance (node, side) {
+  // We have to determine if it is a dangler
+  if (isDangler(node, side)) {
 
+  }
+  // We have to change depth of node if we move it
 };
 
-BinarySearchTree.prototype.rebalance = function() {
+function isDangler(node, side) {
+  var parent = node.parent;
 
-};
+  var emptySide = (side === 'left') ? 'right' : 'left';
+
+  if (parent.parent && parent.parent ) {
+
+  }
+}
 
 /*
  * Complexity: What is the time complexity of the above functions?
@@ -93,5 +108,5 @@ BinarySearchTree.prototype.rebalance = function() {
     contains()        : O(log(n)), rules out half of the values after each step, but could potentially be up to O(n) because it could be a one sided tree
     depthFirstLog()   : O(n), has to visit each node once
     breadthFirstLog() : O(n), has to visit each node once
-    rebalance()       : O(n), has to visit each node at least once
+    autobalance()     : O(n), has to visit each node at least once
  */

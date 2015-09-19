@@ -51,7 +51,6 @@ describe('binarySearchTree', function() {
     binarySearchTree.insert(6);
     binarySearchTree.insert(1);
     binarySearchTree.breadthFirstLog(func);
-    console.log(array);
     expect(array).to.eql([5,2,6,1,3,4]);
   });
 
@@ -65,24 +64,13 @@ describe('binarySearchTree', function() {
     expect(depth2.depth).to.equal(2);
   });
 
-  xit ('should traverse the tree and give a sorted array', function() {
-    binarySearchTree.insert(2);
+  it ('should autobalance a tree when appropriate (AVL)', function() {
     binarySearchTree.insert(3);
-    binarySearchTree.insert(4);
     binarySearchTree.insert(6);
+    binarySearchTree.insert(2);
     binarySearchTree.insert(1);
-    expect(binarySearchTree.traverseInOrder()).to.equal([1,2,3,4,5,6]);
+    expect(binarySearchTree.left.value).to.equal(2);
+    expect(binarySearchTree.left.left.value).to.equal(1);
+    expect(binarySearchTree.left.right.value).to.equal(3);
   });
-
-  //
-  // it ('should rebalance a tree when appropriate', function() {
-  //   binarySearchTree.insert(2);
-  //   binarySearchTree.insert(3);
-  //   binarySearchTree.insert(4);
-  //   binarySearchTree.insert(8);
-  //   binarySearchTree.insert(9);
-  //   binarySearchTree.insert(7);
-  //   binarySearchTree.insert(10);
-  //   binarySearchTree.insert(6);
-  // });
 });
