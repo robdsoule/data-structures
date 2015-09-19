@@ -28,6 +28,18 @@ treeMethods.removeFromParent = function() {
   return this;
 };
 
+treeMethods.traverse = function(cb) {
+  cb(this);
+  if (Object.keys(this.children).length === 0) {
+    return;
+  }
+
+  for (var key in this.children) {
+    this.traverse.call(this.children[key], cb);
+  }
+
+};
+
 treeMethods.setParent = function(parent) {
   this.parent = parent;
 };
@@ -39,17 +51,31 @@ treeMethods.setValue = function(value) {
 treeMethods.contains = function(target){
   var found = false;
 
-  var find = function(tree) {
+  this.traverse(function(tree) {
     if (tree.value === target) {
       found = true;
       return;
     }
-    for (var key in tree.children) {
-      find(tree.children[key]);
-    }
-  }
-  find(this);
+  });
+
   return found;
+
+  // Before adding traverse
+  // var found = false;
+
+
+  // var find = function(tree) {
+  //   if (tree.value === target) {
+  //     found = true;
+  //     return;
+  //   }
+  //   for (var key in tree.children) {
+  //     find(tree.children[key]);
+  //   }
+  // }
+  // find(this);
+
+  // return found;
 };
 
 
