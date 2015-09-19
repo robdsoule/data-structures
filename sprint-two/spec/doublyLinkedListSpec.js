@@ -10,7 +10,7 @@ describe('doublyLinkedList', function() {
     expect(linkedList).to.have.property("tail");
   });
 
-  it('should have methods named "addToTail", "addToHead, "removeHead", and "contains"', function() {
+  it('should have methods named "addToTail", "addToHead", "removeHead", and "contains"', function() {
     expect(linkedList.addToTail).to.be.a("function");
     expect(linkedList.addToHead).to.be.a("function");
     expect(linkedList.removeHead).to.be.a("function");
@@ -30,6 +30,39 @@ describe('doublyLinkedList', function() {
     expect(linkedList.tail.value).to.equal(8);
     expect(linkedList.tail.prev.value).to.equal(4);
     expect(linkedList.tail.prev.next.value).to.equal(8);
+  });
+
+  it ('should assign previous node on former head when new head is added', function () {
+    linkedList.addToHead(3);
+    linkedList.addToHead(2);
+    expect(linkedList.head.value).to.equal(2);
+    expect(linkedList.head.next.prev.value).to.equal(2);
+  });
+
+  it ('should assign next node on head to old head', function() {
+    linkedList.addToHead(4);
+    linkedList.addToHead(3);
+    linkedList.addToHead(2);
+    expect(linkedList.head.value).to.equal(2);
+    expect(linkedList.head.next.value).to.equal(3);
+  });
+
+  it ('should not connect the tail to the head', function() {
+    linkedList.addToHead(4);
+    linkedList.addToHead(3);
+    linkedList.addToHead(2);
+    expect(linkedList.head.value).to.equal(2);
+    expect(linkedList.head.next.value).to.equal(3);
+    expect(linkedList.head.next.next.value).to.equal(4);
+    expect(linkedList.tail.next).to.equal(undefined);
+  });
+
+  it ('should not connect the head to the tail', function() {
+    linkedList.addToHead(4);
+    linkedList.addToHead(3);
+    linkedList.addToHead(2);
+    expect(linkedList.head.value).to.equal(2);
+    expect(linkedList.head.prev).to.equal(undefined);
   });
 
   it('should remove the head from the list when removeHead is called', function(){
