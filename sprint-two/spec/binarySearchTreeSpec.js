@@ -64,6 +64,15 @@ describe('binarySearchTree', function() {
     expect(depth2.depth).to.equal(2);
   });
 
+  it ('should contain the proper parent in a node', function() {
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(1);
+    expect(binarySearchTree.left.parent.value).to.equal(5);
+    expect(binarySearchTree.left.left.parent.value).to.equal(3);
+  });
+
   it ('should autobalance a tree when appropriate (AVL)', function() {
     binarySearchTree.insert(3);
     binarySearchTree.insert(6);

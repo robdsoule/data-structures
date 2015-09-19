@@ -17,6 +17,7 @@ BinarySearchTree.prototype.insert = function(value) {
       newTree = this.left.insert(value);
     } else {
       side = 'left';
+      newTree.parent = this;
       this.left = newTree;
     }
   } else {
@@ -24,11 +25,11 @@ BinarySearchTree.prototype.insert = function(value) {
       newTree = this.right.insert(value);
     } else {
       side = 'right'
+      newTree.parent = this;
       this.right = newTree;
     }
   }
-  newTree.parent = this;
-  autobalance(newTree, side);
+  //autobalance(newTree, side);
   return newTree;
 };
 
@@ -82,6 +83,10 @@ BinarySearchTree.prototype.breadthFirstLog = function(callback, depth) {
 
 // Autobalances the tree upon
 function autobalance (node, side) {
+  if (!node.parent) {
+    return;
+  }
+
   // We have to determine if it is a dangler
   if (isDangler(node, side)) {
 
